@@ -1,0 +1,15 @@
+dn: o=people,cn=lab,cn=com
+o: Lab Users
+description: Generic users that exist in the lab environment
+objectClass: organization
+
+dn: dc=lab,dc=com
+dc: lab
+o: test
+objectClass: dcObject
+objectClass: organization
+
+dn: o=people,dc=lab,dc=com
+o: people
+description: Generic users that exist in the lab environment
+objectClass: organization
