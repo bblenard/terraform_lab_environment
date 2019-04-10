@@ -1,0 +1,10 @@
+driftfile {{ pillar['drift_file'] }} 
+# restrict default kod limited nomodify notrap nopeer noquery
+# restrict -6 default kod limited nomodify notrap nopeer noquery
+# 
+# restrict 127.0.0.1
+# restrict -6 ::1
+
+{% for server in pillar['ntp_pool'] %}
+server {{ server }}
+{% endfor %}

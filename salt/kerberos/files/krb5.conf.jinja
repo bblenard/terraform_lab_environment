@@ -1,0 +1,18 @@
+[libdefaults]
+        default_realm = {{ pillar['domain-name'].upper() }}
+
+[realms]
+        {{ pillar['domain-name'].upper() }} = {
+                kdc = krb.{{ pillar['domain-name'] }}:88
+                admin_server = krb.{{ pillar['domain-name'] }}:749
+                default_domain = {{ pillar['domain-name'] }} 
+        }
+
+[domain_realm]
+        {{ pillar['domain-name'] }} = {{ pillar['domain-name'].upper() }}
+        .{{ pillar['domain-name'] }} = {{ pillar['domain-name'].upper() }}
+
+[logging]
+        kdc = FILE:/var/log/krb5kdc.log
+        admin_server = FILE:/var/log/kadmin.log
+        default = FILE:/var/log/krb5lib.log

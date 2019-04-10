@@ -1,0 +1,25 @@
+dn: dc=lab,dc=com
+dc: lab
+o: 'Lab'
+objectClass: dcObject
+objectClass: organization
+
+dn: ou=People,dc=lab,dc=com
+ou: People
+description: 'Lab Users'
+objectClass: organizationalUnit
+
+
+{% for index in range(0, (pillar['users']|length)) %}}
+dn: uid={{ pillar['users'][index] }},ou=People,dc=lab,dc=com
+uid: {{ pillar['users'][index] }}
+cn: {{ pillar['users'][index] }}
+objectClass: account
+objectClass: posixAccount
+objectClass: top
+loginShell: /bin/bash
+uidNumber: {{ index + 1000 }}
+gidNumber: {{ index + 1000 }}
+homeDirectory: /home/{{ pillar['users'][index] }}
+gecos: {{ pillar['users'][index] }}
+{% endfor %}
