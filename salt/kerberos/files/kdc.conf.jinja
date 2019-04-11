@@ -3,11 +3,11 @@
 
 [realms]
         {{ pillar['domain-name'].upper() }} = {
-                database_name = /usr/local/var/krb5kdc/principal
-                admin_keytab = /usr/local/var/krb5kdc/kadm5.keytab
-                acl_file = /usr/local/var/krb5kdc/kadm5.acl
-                dict_file = /usr/local/var/krb5kdc/kadm5.dict
-                key_stash_file = /usr/local/var/krb5kdc/.k5.WEDGIE.ORG
+                database_name = {{ pillar['kerberos_base_dir'] }}/principal
+                admin_keytab = {{ pillar['kerberos_base_dir'] }}/kadm5.keytab
+                acl_file = {{ pillar['kerberos_base_dir'] }}/kadm5.acl
+                dict_file = {{ pillar['kerberos_base_dir'] }}/kadm5.dict
+                key_stash_file = {{ pillar['kerberos_base_dir'] }}.k5.{{ pillar['domain-name'].upper() }}
                 kadmind_port = 749
                 max_life = 10h 0m 0s
                 max_renewable_life = 7d 0h 0m 0s
