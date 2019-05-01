@@ -1,0 +1,8 @@
+#
+# Managed By Salt
+#
+
+BASE    {{ pillar['suffix'] }}
+URI     ldap://ldap.{{ pillar['domain-name'] }}
+TLS_CACERTDIR   /etc/openldap/certs
+SASL_NOCANON    on

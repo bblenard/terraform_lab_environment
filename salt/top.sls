@@ -1,10 +1,11 @@
 base:
   '*':
     - common
-  'login*':
+    - chrony
+  'ldap*':
     - ldap.server
     - ldap.entries
-    - chrony
+  'krb*':
     - kerberos.server
   # 'dns':
   #   - bind

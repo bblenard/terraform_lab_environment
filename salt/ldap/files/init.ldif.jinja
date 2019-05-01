@@ -1,17 +1,17 @@
-dn: dc=lab,dc=com
-dc: lab
+dn: {{ pillar['suffix'] }}
+dc: m64
 o: 'Lab'
 objectClass: dcObject
 objectClass: organization
 
-dn: ou=People,dc=lab,dc=com
+dn: ou=People,{{ pillar['suffix'] }}
 ou: People
 description: 'Lab Users'
 objectClass: organizationalUnit
 
 
-{% for index in range(0, (pillar['users']|length)) %}}
-dn: uid={{ pillar['users'][index] }},ou=People,dc=lab,dc=com
+{% for index in range(0, (pillar['users']|length)) %}
+dn: uid={{ pillar['users'][index] }},ou=People,{{ pillar['suffix'] }}
 uid: {{ pillar['users'][index] }}
 cn: {{ pillar['users'][index] }}
 objectClass: account

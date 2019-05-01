@@ -12,3 +12,13 @@ suffix "{{ pillar['suffix'] }}"
 directory {{ pillar['database_dir'] }}/{{ pillar['suffix'] }}
 rootdn "cn=root,{{ pillar['suffix'] }}"
 rootpw {{ pillar['rootpw'] }}
+
+authz-policy from
+authz-regexp
+     uid=(.*),cn={{ pillar['domain-name'] }},cn=GSSAPI,cn=auth
+     uid=$1,ou=People,{{ pillar['suffix'] }}
+sasl-realm      {{ pillar['domain-name'].upper() }}
+sasl-host       ldap.{{ pillar['domain-name'] }}
+
+# Everyone can read everything
+access to dn.base="" by * read

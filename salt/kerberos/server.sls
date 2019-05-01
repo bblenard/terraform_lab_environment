@@ -18,7 +18,7 @@ Configure Realm:
 Create Kerberos directory:
     file.directory:
         - name: "{{ pillar['kerberos_base_dir'] }}"
-        - user: root 
+        - user: root
         - group: root
         - recurse:
             - user
@@ -67,34 +67,40 @@ Create keytab file:
         - onchanges:
             - file: "{{ pillar['kerberos_base_dir'] }}"
 
-Create Systemd unit for krb5kdc:
-    file.managed:
-        - name: "/etc/systemd/system/krb5kdc.service"
-        - source: salt://kerberos/files/krb5kdc.service
-        - mode: 0644
-        - show_changes: true
-        - user: root
-        - group: root
+{% for user in pillar['users'] %}
+Add user {{ user }} principle:
+    cmd.run:
+        - name: "kadmin.local addprinc -pw '{{ pillar['lab_user_initial_password'] }}' {{ user }}"
+{% endfor %}
 
-Create Systemd unit for kadmind:
-    file.managed:
-        - name: "/etc/systemd/system/kadmind.service"
-        - source: salt://kerberos/files/kadmind.service
-        - mode: 0644
-        - show_changes: true
-        - user: root
-        - group: root
+# Create Systemd unit for krb5kdc:
+#     file.managed:
+#         - name: "/etc/systemd/system/krb5kdc.service"
+#         - source: salt://kerberos/files/krb5kdc.service
+#         - mode: 0644
+#         - show_changes: true
+#         - user: root
+#         - group: root
+#
+# Create Systemd unit for kadmind:
+#     file.managed:
+#         - name: "/etc/systemd/system/kadmind.service"
+#         - source: salt://kerberos/files/kadmind.service
+#         - mode: 0644
+#         - show_changes: true
+#         - user: root
+#         - group: root
 
-Enable and Start krb5kdc:
-    service.running:
-        - name: krb5kdc
-        - enable: true
-        - require:
-            - file: "/etc/systemd/system/krb5kdc.service"
-
-Enable and Start kadmind:
-    service.running:
-        - name: kadmind
-        - enable: true
-        - require:
-            - file: "/etc/systemd/system/kadmind.service"
+# Enable and Start krb5kdc:
+#     service.running:
+#         - name: krb5kdc
+#         - enable: true
+#         - require:
+#             - file: "/etc/systemd/system/krb5kdc.service"
+#
+# Enable and Start kadmind:
+#     service.running:
+#         - name: kadmind
+#         - enable: true
+#         - require:
+#             - file: "/etc/systemd/system/kadmind.service"

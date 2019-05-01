@@ -1,4 +1,3 @@
 terraform.tfstate*
-tokens.tfvars
-pillar/
+lab.tfvars
 .terraform/

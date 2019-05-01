@@ -54,5 +54,14 @@ Generate configuration directory:
         - onchanges:
             - file: /etc/openldap/slapd.conf
 
+Create ldap.conf:
+    file.managed:
+        - name: "/etc/openldap/ldap.conf"
+        - user: root
+        - group: root
+        - mode: 0644
+        - source: salt://ldap/files/ldap.conf.jinja
+        - template: jinja
+        - show_changes: true
 
         
